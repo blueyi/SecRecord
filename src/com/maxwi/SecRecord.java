@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 public class SecRecord {
 
     public static void main(String[] args) {
+        Test();
+    }
+
+    private static void Test() {
         // write your code here
         String srcPath = "滕王阁序英文版.doc";
         String enPath = "滕王阁序英文版.doc.aes";
@@ -24,14 +28,23 @@ public class SecRecord {
         if (passWord.isEmpty()) {
             System.out.println("Password Error!");
         }
-        if (CryptFile.enCryptFile(enPath, srcPath, passWord)) {
+
+        long lStartTime = System.nanoTime();
+        boolean res = CryptFile.enCryptFile(enPath, srcPath, passWord);
+        long lTimeElapsed = System.nanoTime() - lStartTime;
+        System.out.println("Encrypt time elapsed(ms): " + (lTimeElapsed / 1000000.0));
+        if (res) {
             System.out.println("Encrypt Success!");
         }
         else {
             System.out.println("Encrypt Failed!");
         }
 
-        if (CryptFile.deCryptFile(dePath, enPath, passWord)) {
+        lStartTime = System.nanoTime();
+        res = CryptFile.deCryptFile(dePath, enPath, passWord);
+        lTimeElapsed = System.nanoTime() - lStartTime;
+        System.out.println("Decrypt time elapsed(ms): " + (lTimeElapsed / 1000000.0));
+        if (res) {
             System.out.println("Decrypt Success!");
         }
         else {
